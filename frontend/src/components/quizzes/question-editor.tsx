@@ -102,20 +102,35 @@ export function QuestionEditor({
 
         <label className="grid gap-2">
           <span className="text-sm font-medium text-slate-600">Question type</span>
-          <select
-            value={question.type}
-            onChange={(event: ChangeEvent<HTMLSelectElement>) => {
-              const nextType = event.target.value as QuestionType;
-              onUpdate(question.id, (current) => syncQuestionType(current, nextType));
-            }}
-            className="rounded-2xl border border-slate-200 bg-white pl-4 pr-12 py-3 text-slate-950 outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-slate-950/5"
-          >
-            {questionTypeOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
+
+          <div className="relative">
+            <select
+              value={question.type}
+              onChange={(event: ChangeEvent<HTMLSelectElement>) => {
+                const nextType = event.target.value as QuestionType;
+                onUpdate(question.id, (current) => syncQuestionType(current, nextType));
+              }}
+              className="appearance-none cursor-pointer w-full rounded-2xl border border-slate-200 bg-white pl-4 pr-12 py-3 text-slate-950 outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-slate-950/5"
+            >
+              {questionTypeOptions.map((option) => (
+                <option className="cursor-pointer" key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+
+            <div className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-slate-500">
+              <svg
+                className="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
         </label>
       </div>
 
@@ -201,7 +216,7 @@ export function QuestionEditor({
                 <button
                   type="button"
                   onClick={() => onToggleCorrectOption(question.id, optionIndex)}
-                  className={`cursor-pointer inline-flex items-center justify-center rounded-full border px-4 py-2 text-sm font-medium transition ${
+                  className={`cursor-pointer mt-6 inline-flex items-center justify-center rounded-full border px-4 py-2 text-sm font-medium transition ${
                     isSelected
                       ? 'border-emerald-200 bg-emerald-100 text-emerald-900'
                       : 'border-slate-200 bg-slate-50 text-slate-500 hover:border-slate-300 hover:text-slate-950'
@@ -214,7 +229,7 @@ export function QuestionEditor({
                   type="button"
                   onClick={() => onRemoveOption(question.id, optionIndex)}
                   disabled={question.options.length === 1}
-                  className="cursor-pointer rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-500 transition hover:border-slate-300 hover:text-slate-950 disabled:cursor-not-allowed disabled:opacity-40"
+                  className="cursor-pointer mt-6 rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-500 transition hover:border-slate-300 hover:text-slate-950 disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   Remove
                 </button>
